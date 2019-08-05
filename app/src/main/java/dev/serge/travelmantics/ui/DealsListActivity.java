@@ -1,7 +1,4 @@
-package dev.serge.travelmantics;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package dev.serge.travelmantics.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,23 +7,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import dev.serge.travelmantics.ui.InsertDealActivity;
+import dev.serge.travelmantics.R;
+import dev.serge.travelmantics.ui.adapter.DealAdapter;
 import dev.serge.travelmantics.utils.FirebaseUtils;
 
-public class MainActivity extends AppCompatActivity {
-
-    private FloatingActionButton fabAddDeal;
+public class DealsListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        FirebaseUtils.openFirebaseRef("travelsdeals", this);
+        setContentView(R.layout.activity_list);
+        final DealAdapter adapter = new DealAdapter();
+        RecyclerView recyclerView = findViewById(R.id.rvDeals);
+        recyclerView.setAdapter(adapter);
 
-        fabAddDeal = findViewById(R.id.fabAddDeal);
-
+        FirebaseUtils.openFirebaseRef("deals", this);
+        FloatingActionButton fabAddDeal = findViewById(R.id.fabAddDeal);
         fabAddDeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        FirebaseUtils.openFirebaseRef("deals", this);
+        RecyclerView rv = findViewById(R.id.rvDeals);
+        final DealAdapter adapter = new DealAdapter();
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(layoutManager);
+        rv.setAdapter(adapter);
         FirebaseUtils.attachListener();
     }
 }
