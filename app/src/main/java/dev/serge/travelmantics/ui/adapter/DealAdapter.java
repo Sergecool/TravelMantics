@@ -89,8 +89,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         return deals.size();
     }
 
-    class DealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
+    class DealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView dealTitle;
         TextView dealDescription;
         TextView dealPrice;
@@ -111,16 +110,15 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            TravelDeal selectedDeal = deals.get(position);
-            Intent intent = new Intent(view.getContext(), DealActivity.class);
-            intent.putExtra("deal", selectedDeal);
-            view.getContext().startActivity(intent);
-        }
-
-        @Override
-        public boolean onLongClick(View view) {
-            return false;
+            if (FirebaseUtils.isAdmin) {
+                int position = getAdapterPosition();
+                TravelDeal selectedDeal = deals.get(position);
+                Intent intent = new Intent(view.getContext(), DealActivity.class);
+                intent.putExtra("deal", selectedDeal);
+                view.getContext().startActivity(intent);
+            } else {
+                // todo how a dialog with action for non admin users.
+            }
         }
     }
 }
