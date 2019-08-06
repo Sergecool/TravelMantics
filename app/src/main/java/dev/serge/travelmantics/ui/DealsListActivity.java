@@ -42,7 +42,7 @@ public class DealsListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.overall_menu, menu);
+        inflater.inflate(R.menu.home_menu, menu);
         return true;
     }
 
