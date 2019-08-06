@@ -41,7 +41,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
                 TravelDeal deal = dataSnapshot.getValue(TravelDeal.class);
                 deal.setId(dataSnapshot.getKey());
                 deals.add(deal);
-                notifyItemInserted(deals.size()-1);
+                notifyItemInserted(deals.size() - 1);
             }
 
             @Override
@@ -110,15 +110,11 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
 
         @Override
         public void onClick(View view) {
-            if (FirebaseUtils.isAdmin) {
-                int position = getAdapterPosition();
-                TravelDeal selectedDeal = deals.get(position);
-                Intent intent = new Intent(view.getContext(), DealActivity.class);
-                intent.putExtra("deal", selectedDeal);
-                view.getContext().startActivity(intent);
-            } else {
-                // todo how a dialog with action for non admin users.
-            }
+            int position = getAdapterPosition();
+            TravelDeal selectedDeal = deals.get(position);
+            Intent intent = new Intent(view.getContext(), DealActivity.class);
+            intent.putExtra("deal", selectedDeal);
+            view.getContext().startActivity(intent);
         }
     }
 }
