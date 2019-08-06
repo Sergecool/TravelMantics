@@ -111,11 +111,15 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            TravelDeal selectedDeal = deals.get(position);
-            Intent intent = new Intent(view.getContext(), DealActivity.class);
-            intent.putExtra("deal", selectedDeal);
-            view.getContext().startActivity(intent);
+            if (FirebaseUtils.isAdmin) {
+                int position = getAdapterPosition();
+                TravelDeal selectedDeal = deals.get(position);
+                Intent intent = new Intent(view.getContext(), DealActivity.class);
+                intent.putExtra("deal", selectedDeal);
+                view.getContext().startActivity(intent);
+            } else {
+                // todo how a dialog with action for non admin users.
+            }
         }
 
         @Override
