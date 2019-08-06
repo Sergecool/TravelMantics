@@ -1,6 +1,9 @@
 package dev.serge.travelmantics.utils;
+/**
+ * Utility class to perform firebase operations
+ */
 
-import android.app.Activity;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,39 +18,52 @@ import java.util.Arrays;
 import java.util.List;
 
 import dev.serge.travelmantics.model.TravelDeal;
+import dev.serge.travelmantics.ui.DealsListActivity;
 
 public class FirebaseUtils {
 
     private static final int RC_SIGN_IN = 123;
     public static FirebaseDatabase dealDatabase;
     public static DatabaseReference databaseReference;
-    public static FirebaseUtils utils;
+    private static FirebaseUtils utils;
     public static FirebaseAuth auth;
     public static FirebaseAuth.AuthStateListener authStateListener;
     public static ArrayList<TravelDeal> deals;
-    private static Activity caller;
-
+    private static DealsListActivity caller;
+    private boolean isAdmin;
     // private constructor to prevent class instanciation
     private FirebaseUtils() { }
 
-    public static void openFirebaseRef(String reference, final Activity activity) {
+    public static void openFirebaseRef(String reference, final DealsListActivity activity) {
         if (utils == null) {
             utils = new FirebaseUtils();
             dealDatabase = FirebaseDatabase.getInstance();
-            databaseReference = dealDatabase.getReference().child("deals");
             auth = FirebaseAuth.getInstance();
             caller = activity;
+
             authStateListener = new FirebaseAuth.AuthStateListener() {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     if (firebaseAuth.getCurrentUser() == null) {
                         FirebaseUtils.signIn();
-                        Toast.makeText(caller.getBaseContext(), "Welcome back",
-                                Toast.LENGTH_LONG).show();
                     }
+                    else {
+                        String userId = firebaseAuth.getUid();
+                        //checkAdmin(userId);
+                    }
+                    Toast.makeText(activity.getBaseContext(), "Welcome back!", Toast.LENGTH_LONG).show();
                 }
             };
+            // connectStorage();
+
         }
+
+        deals = new ArrayList<>();
+        databaseReference = dealDatabase.getReference().child(reference);
+    }
+
+    private static void checkIsAdmin(String id) {
+
     }
 
     private static void signIn() {
@@ -61,6 +77,7 @@ public class FirebaseUtils {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setIsSmartLockEnabled(false)
                         .build(),
                 RC_SIGN_IN);
     }

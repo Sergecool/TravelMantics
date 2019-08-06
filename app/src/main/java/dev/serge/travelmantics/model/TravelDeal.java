@@ -1,22 +1,27 @@
 package dev.serge.travelmantics.model;
 
+import java.io.Serializable;
+
 /**
  * A model class that represent a travel deal object
  */
 
-public class TravelDeal {
+public class TravelDeal implements Serializable {
     private String id;
     private String title;
     private String price;
     private String description;
     private String imageUrl;
 
-    public TravelDeal(String title, String price, String description) {
+    public TravelDeal() {}
+
+    public TravelDeal(String title, String price, String description, String imageUrl) {
         this.setId(id);
         this.setTitle(title);
         this.setPrice(price);
         this.setDescription(description);
-    }
+        this.setImageUrl(imageUrl);
+     }
 
     public String getTitle() {
         return title;
