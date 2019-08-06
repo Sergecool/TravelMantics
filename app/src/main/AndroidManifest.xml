@@ -11,8 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.InsertDealActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.DealActivity"
+            android:parentActivityName=".ui.DealsListActivity">
+
+        </activity>
+        <activity android:name=".ui.InsertDealActivity"
+            android:parentActivityName=".ui.DealsListActivity"/>
+
+        <activity android:name=".ui.DealsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
