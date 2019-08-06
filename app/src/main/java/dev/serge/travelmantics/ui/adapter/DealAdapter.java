@@ -89,8 +89,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         return deals.size();
     }
 
-    class DealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
+    class DealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView dealTitle;
         TextView dealDescription;
         TextView dealPrice;
@@ -120,11 +119,6 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
             } else {
                 // todo how a dialog with action for non admin users.
             }
-        }
-
-        @Override
-        public boolean onLongClick(View view) {
-            return false;
         }
     }
 }
