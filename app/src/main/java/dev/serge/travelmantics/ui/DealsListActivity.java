@@ -23,6 +23,8 @@ import dev.serge.travelmantics.utils.FirebaseUtils;
 
 public class DealsListActivity extends AppCompatActivity {
 
+    FloatingActionButton fabAddDeal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class DealsListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         FirebaseUtils.openFirebaseRef("deals", this);
-        FloatingActionButton fabAddDeal = findViewById(R.id.fabAddDeal);
+        fabAddDeal = findViewById(R.id.fabAddDeal);
         fabAddDeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +42,8 @@ public class DealsListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        fabVisibility();
     }
 
     @Override
@@ -57,6 +61,14 @@ public class DealsListActivity extends AppCompatActivity {
                 return true;
                 default:
                     return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void fabVisibility() {
+        if (FirebaseUtils.isAdmin) {
+            fabAddDeal.show();
+        } else {
+            fabAddDeal.hide();
         }
     }
 
