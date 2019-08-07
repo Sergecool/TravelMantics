@@ -7,7 +7,7 @@
     tools:context=".ui.DealActivity">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editTitle"
+        android:id="@+id/inputTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_standard"
@@ -21,7 +21,7 @@
         android:inputType="textShortMessage" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editPrice"
+        android:id="@+id/inputPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_standard"
@@ -31,11 +31,11 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTitle"
+        app:layout_constraintTop_toBottomOf="@+id/inputTitle"
         android:importantForAutofill="no" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editDescription"
+        android:id="@+id/inputDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_standard"
@@ -44,8 +44,21 @@
         android:hint="@string/description_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPrice"
+        app:layout_constraintTop_toBottomOf="@+id/inputPrice"
         android:importantForAutofill="no"
         android:inputType="textLongMessage" />
+
+    <ImageButton
+        android:id="@+id/dealImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/add_deal_image_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputDescription"
+        app:layout_constraintVertical_bias="0.172" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

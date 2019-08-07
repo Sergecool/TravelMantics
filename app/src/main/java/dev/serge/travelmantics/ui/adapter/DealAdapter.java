@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
     private FirebaseDatabase database;
     private ChildEventListener eventListener;
     private DatabaseReference mReference;
+    private ImageView dealImage;
 
     public DealAdapter() {
         database = FirebaseDatabase.getInstance();
@@ -89,6 +92,16 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         return deals.size();
     }
 
+    private void showImage(String url) {
+        if (url != null && !url.isEmpty()) {
+            Picasso.get()
+                    .load(url)
+                    .resize(160, 160)
+                    .centerCrop()
+                    .into(dealImage);
+        }
+    }
+
     class DealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView dealTitle;
         TextView dealDescription;
@@ -96,9 +109,10 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
 
         DealViewHolder(@NonNull View itemView) {
             super(itemView);
-            dealTitle = itemView.findViewById(R.id.tvDealTitle);
-            dealDescription = itemView.findViewById(R.id.tvDealDesc);
-            dealPrice = itemView.findViewById(R.id.tvDealPrice);
+            dealTitle = itemView.findViewById(R.id.dealTitle);
+            dealDescription = itemView.findViewById(R.id.dealDescription);
+            dealPrice = itemView.findViewById(R.id.dealPrice);
+            dealImage = itemView.findViewById(R.id.dealImage);
             itemView.setOnClickListener(this);
         }
 
@@ -106,6 +120,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
             dealTitle.setText(deal.getTitle());
             dealDescription.setText(deal.getDescription());
             dealPrice.setText(deal.getPrice());
+            showImage(deal.getImageUrl());
         }
 
         @Override
