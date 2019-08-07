@@ -16,6 +16,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,21 +29,26 @@ import dev.serge.travelmantics.ui.DealsListActivity;
 public class FirebaseUtils {
 
     private static final int RC_SIGN_IN = 1000;
-    public static FirebaseDatabase dealDatabase;
-    public static DatabaseReference databaseReference;
-    private static FirebaseUtils utils;
-    public static FirebaseAuth auth;
-    public static FirebaseAuth.AuthStateListener authStateListener;
+    private static FirebaseDatabase dealDatabase;
+    private static DatabaseReference databaseReference;
+    public static FirebaseStorage storage;
+    public static StorageReference storageReference;
+    private static FirebaseAuth auth;
+    private static FirebaseAuth.AuthStateListener authStateListener;
     public static ArrayList<TravelDeal> deals;
-    private static DealsListActivity caller;
     public static boolean isAdmin;
+    private static FirebaseUtils utils;
+    private static DealsListActivity caller;
+
     // private constructor to prevent class instanciation
-    private FirebaseUtils() { }
+    private FirebaseUtils() {
+    }
 
     public static void openFirebaseRef(String reference, final DealsListActivity activity) {
         if (utils == null) {
             utils = new FirebaseUtils();
             dealDatabase = FirebaseDatabase.getInstance();
+            storageReference = FirebaseStorage.getInstance().getReference();
             auth = FirebaseAuth.getInstance();
             caller = activity;
 
@@ -50,18 +57,16 @@ public class FirebaseUtils {
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     if (firebaseAuth.getCurrentUser() == null) {
                         FirebaseUtils.signIn();
-                    }
-                    else {
+                    } else {
                         String userId = firebaseAuth.getUid();
                         checkIsAdmin(userId);
                     }
                     Toast.makeText(activity.getBaseContext(), "Welcome back!", Toast.LENGTH_LONG).show();
                 }
             };
-            // connectStorage();
+            connectStorage();
 
         }
-
         deals = new ArrayList<>();
         databaseReference = dealDatabase.getReference().child(reference);
     }
@@ -123,4 +128,8 @@ public class FirebaseUtils {
         auth.removeAuthStateListener(authStateListener);
     }
 
+    private static void connectStorage() {
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference().child("deals_pic");
+    }
 }
