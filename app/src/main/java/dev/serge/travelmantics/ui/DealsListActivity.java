@@ -9,6 +9,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +32,8 @@ public class DealsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         final DealAdapter adapter = new DealAdapter();
         RecyclerView recyclerView = findViewById(R.id.rvDeals);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
 
         FirebaseUtils.openFirebaseRef("deals", this);
